@@ -1,0 +1,19 @@
+{
+  "name": "curly-addi",
+  "version": "1.0.0",
+  "description": "En användarbaserad plattform där en användare har möjligheten att registrera sig, logga in och skapa innehåll",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stenis76/curly-AdDi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Stenis76/curly-AdDi/issues"
+  },
+  "homepage": "https://github.com/Stenis76/curly-AdDi#readme"
+}
