@@ -1,5 +1,6 @@
 const mongodb = require('mongodb')
 
+// Här lägger vi all CRUD funktioner
 
 async function connect() {
   const client = mongodb.MongoClient
