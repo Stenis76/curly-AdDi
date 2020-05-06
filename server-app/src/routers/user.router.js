@@ -16,7 +16,7 @@ router.get("/api/users", async (req, res) => {
 router.get("/api/users/:userId", async (req, res) => {
   try {
     const post = await User.findById(req.params.userId);
-    res.json(res);
+    res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -38,7 +38,7 @@ router.post("/api/users", (req, res) => {
 // DELETE
 router.delete("/api/users/:userId", async (req, res) => {
   try {
-    const removedUser = await User.remove({ __id: req.params.userId });
+    const removedUser = await User.deleteOne({ _id: req.params.userId });
     res.status(200).json(removedUser);
   } catch (err) {
     res.status(500).json(err);
@@ -49,7 +49,7 @@ router.delete("/api/users/:userId", async (req, res) => {
 router.put("/api/users/:userId", async (req, res) => {
   try {
     const updatedUser = await User.updateOne(
-      { __id: req.params.userId },
+      { _id: req.params.userId },
       { $set: { name: req.body.name, password: req.body.password } }
     );
     res.status(200).json(updatedUser)

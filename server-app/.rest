@@ -1,23 +1,41 @@
-GET http://localhost:8080/
 
 ###
+// GET ONE
+GET http://localhost:8080/api/users/5eb294dc5ecfbb162830364e
 
+###
+// GET ALL
 GET http://localhost:8080/api/users
 
 ###
-
+// CREATe A USER
 POST http://localhost:8080/api/users
 Content-Type: application/json
 
 {
-    "id": "1",
     "name": "Adam",
     "password": "123"
+}
+
+### 
+// DELETE USER
+DELETE http://localhost:8080/api/users/5eb296c5958d4620bcfd7240
+
+
+###
+// UPDATE USER
+PUT  http://localhost:8080/api/users/5eb296c5958d4620bcfd7240
+Content-Type: application/json
+
+{
+    "name": "Dick",
+    "password": "tulpan"
 }
 
 ###
 
 GET http://localhost:8080/api/posts
+
 
 ###
 
@@ -25,8 +43,9 @@ POST http://localhost:8080/api/posts
 Content-Type: application/json
 
 {
-    "name": "Headphones Pro",
-    "price": 2000
+    "title": "Test title",
+    "author": "Adam",
+    "content": "text text text text text text text text "
 }
 
 
