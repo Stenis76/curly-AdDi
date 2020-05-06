@@ -1,8 +1,11 @@
 const express = require("express");
-const userRouter = require("./routers/user.router");
-const postRouter = require("./routers/post.router");
-const { run } = require("./mongo");
 const app = express();
+
+const { run } = require("./mongo");
+
+/* Import routes */
+const postRouter = require("./routers/post.router");
+const userRouter = require("./routers/user.router");
 
 /* Make sure to parse req.body as JSON */
 app.use(express.json());
@@ -11,8 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 /* Add API resourses */
 app.use(userRouter);
 app.use(postRouter);
-
-app.get("/", (req, res) => {});
 
 // run the database
 run();

@@ -1,17 +1,17 @@
-const mongodb = require("mongodb");
-
-// Här lägger vi all CRUD funktioner
+const mongoose = require("mongoose");
 
 async function connect() {
-  const client = mongodb.MongoClient;
-  const url =
-    "mongodb+srv://adam:qfmM0ypqTB85T99v@clusterlab3-i3niu.azure.mongodb.net/test?retryWrites=true&w=majority";
-  const options = { useUnifiedTopology: true };
-  const mongoConnection = await client.connect(url, options);
-  console.log("Connected to database");
-  const db = mongoConnection.db("sailboats");
-  console.log("database has been created");
-  return db;
+  try {
+    const MONGODB_URI = "mongodb+srv://adam:qfmM0ypqTB85T99v@clusterlab3-i3niu.azure.mongodb.net/test?retryWrites=true&w=majority";
+    const options = { useNewUrlParser: true, useUnifiedTopology: true };
+    await mongoose.connect(MONGODB_URI, options);
+  
+    mongoose.connection.on("connected", () => console.log("Connected to database"))
+    mongoose.connection.on("error", () => console.log("Database connection error"));
+ 
+  } catch (err) {
+    console.log("Failed to connect to database", err);
+  }
 }
 
 /**
@@ -57,16 +57,7 @@ async function findUser(collection) {
 }
 
 async function run() {
-  try {
-    const db = await connect();
-    const collections = await createCollections(db);
-    createUser(collections[0]);
-    deleteUser(collections[0]);
-    // db.users.insertOne({ name: "Dick" });
-    const users = findUser(collections[0]);
-  } catch (err) {
-    console.error("Connection to database failed", err);
-  }
+   await connect();
 }
 
 module.exports = {

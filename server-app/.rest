@@ -1,0 +1,32 @@
+GET http://localhost:8080/
+
+###
+
+GET http://localhost:8080/api/users
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+    "id": "1",
+    "name": "Adam",
+    "password": "123"
+}
+
+###
+
+GET http://localhost:8080/api/posts
+
+###
+
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+    "name": "Headphones Pro",
+    "price": 2000
+}
+
+

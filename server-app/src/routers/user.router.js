@@ -1,19 +1,61 @@
 const express = require("express");
 const router = express.Router();
+const User = require("../models/user.model");
 
 // GET ALL
-router.get("/api/users", function (req, res) {});
+router.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // GET ONE
-router.get("/api/users/:id", function (req, res) {});
+router.get("/api/users/:userId", async (req, res) => {
+  try {
+    const post = await User.findById(req.params.userId);
+    res.json(res);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // CREATE
-router.post("/api/users", function (req, res) {});
+router.post("/api/users", (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    password: req.body.password,
+  });
+
+  user
+    .save()
+    .then((data) => res.status(201).json(data))
+    .catch((err) => res.status(400).json(err));
+});
 
 // DELETE
-router.delete("/api/users/:id", function (req, res) {});
+router.delete("/api/users/:userId", async (req, res) => {
+  try {
+    const removedUser = await User.remove({ __id: req.params.userId });
+    res.status(200).json(removedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// PUT
-router.put("/api/users/:id", function (req, res) {});
+// UPDATE
+router.put("/api/users/:userId", async (req, res) => {
+  try {
+    const updatedUser = await User.updateOne(
+      { __id: req.params.userId },
+      { $set: { name: req.body.name, password: req.body.password } }
+    );
+    res.status(200).json(updatedUser)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;
