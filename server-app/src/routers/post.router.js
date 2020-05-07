@@ -25,7 +25,7 @@ router.post("/api/posts", (req, res) => {
     title: req.body.title,
     author: req.body.author,
     content: req.body.content,
-    date: new Date(),
+    date: new Date().toString(),
   });
   post
     .save()
@@ -44,14 +44,19 @@ router.delete("/api/posts/:postId", async (req, res) => {
 });
 
 // UPDATE
-
 router.put("/api/posts/:postId", async (req, res) => {
   try {
-    const updatedUser = await User.updateOne(
-      { _id: req.params.userId },
-      { $set: { name: req.body.name, password: req.body.password } }
+    const updatedPost = await Post.updateOne(
+      { _id: req.params.postId },
+      {
+        $set: {
+          title: req.body.title,
+          author: req.body.author,
+          content: req.body.content,
+        },
+      }
     );
-    res.status(200).json(updatedUser);
+    res.status(200).json(updatedPost);
   } catch (err) {
     res.status(500).json(err);
   }
