@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-require('dotenv').config();
+const session = require("express-session");
+require("dotenv").config();
 
 const { run } = require("./mongo");
 
@@ -8,6 +9,14 @@ const { run } = require("./mongo");
 const postRouter = require("./routers/post.router");
 const userRouter = require("./routers/user.router");
 
+//use sessions for tracking logins
+app.use(
+  session({
+    secret: "work hard",
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 /* Make sure to parse req.body as JSON */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
