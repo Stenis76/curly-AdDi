@@ -15,10 +15,10 @@ POST http://localhost:8080/api/newuser
 Content-Type: application/json
 
 {
-    "name": "Adam Kjäll med hash",
-    "username": "mrCode",
+    "name": "testson",
+    "username": "test1",
     "email": "adam.kjall@humblebeeas.sw",
-    "password": "2345"
+    "password": "123"
 }
 
 ###
@@ -27,8 +27,8 @@ POST http://localhost:8080/api/log-in
 Content-Type: application/json
 
 {
-    "username": "mrCode",
-    "password": "2345"
+    "username": "test1",
+    "password": "123"
 }
 
 ###

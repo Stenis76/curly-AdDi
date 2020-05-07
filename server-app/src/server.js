@@ -9,6 +9,14 @@ const { run } = require("./mongo");
 const postRouter = require("./routers/post.router");
 const userRouter = require("./routers/user.router");
 
+//use sessions for tracking logins
+app.use(
+  session({
+    secret: "work hard",
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 /* Make sure to parse req.body as JSON */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,15 +27,6 @@ app.use(postRouter);
 
 // run the database
 run();
-
-//use sessions for tracking logins
-app.use(
-  session({
-    secret: "work hard",
-    resave: true,
-    saveUninitialized: false,
-  })
-);
 
 const PORT = process.env.PORT || 8080;
 /* Start server */
