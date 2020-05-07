@@ -5,10 +5,13 @@ async function connect() {
     const MONGODB_URI = process.env.MONGODB_URI;
     const options = { useNewUrlParser: true, useUnifiedTopology: true };
     await mongoose.connect(MONGODB_URI, options);
-  
-    mongoose.connection.on("connected", () => console.log("Connected to database"))
-    mongoose.connection.on("error", () => console.log("Database connection error"));
- 
+
+    mongoose.connection.on("connected", () =>
+      console.log("Connected to database")
+    );
+    mongoose.connection.on("error", () =>
+      console.log("Database connection error")
+    );
   } catch (err) {
     console.log("Failed to connect to database", err);
   }
@@ -57,11 +60,9 @@ async function connect() {
 // }
 
 async function run() {
-   await connect();
+  await connect();
 }
 
 module.exports = {
-  run
+  run,
 };
-
-// anv: adam password:qfmM0ypqTB85T99v

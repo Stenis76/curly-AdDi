@@ -28,7 +28,6 @@ router.post("/api/users", (req, res) => {
     name: req.body.name,
     password: req.body.password,
   });
-
   user
     .save()
     .then((data) => res.status(201).json(data))
@@ -52,7 +51,7 @@ router.put("/api/users/:userId", async (req, res) => {
       { _id: req.params.userId },
       { $set: { name: req.body.name, password: req.body.password } }
     );
-    res.status(200).json(updatedUser)
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json(err);
   }
