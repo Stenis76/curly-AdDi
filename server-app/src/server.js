@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-require('dotenv').config();
+const session = require("express-session");
+require("dotenv").config();
 
 const { run } = require("./mongo");
 
@@ -18,6 +19,15 @@ app.use(postRouter);
 
 // run the database
 run();
+
+//use sessions for tracking logins
+app.use(
+  session({
+    secret: "work hard",
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 
 const PORT = process.env.PORT || 8080;
 /* Start server */

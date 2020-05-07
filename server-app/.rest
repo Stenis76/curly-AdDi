@@ -10,16 +10,28 @@ GET http://localhost:8080/api/users
 
 
 ###
-// CREATe A USER
-POST http://localhost:8080/api/users
+// CREATE A USER
+POST http://localhost:8080/api/newuser
 Content-Type: application/json
 
 {
-    "name": "Adam Kjäll",
-    "password": "1234"
+    "name": "Adam Kjäll med hash",
+    "username": "mrCode",
+    "email": "adam.kjall@humblebeeas.sw",
+    "password": "2345"
 }
 
-### 
+###
+// LOGIN
+POST http://localhost:8080/api/log-in
+Content-Type: application/json
+
+{
+    "username": "mrCode",
+    "password": "2345"
+}
+
+###
 // DELETE USER
 DELETE http://localhost:8080/api/users/5eb296c5958d4620bcfd7240
 
