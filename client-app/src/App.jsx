@@ -3,6 +3,8 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import WelcomePage from "./pages/welcome-page";
+import LogInPage from "./pages/log-in-page";
+import MainPage from "./pages/main-page";
 
 function App() {
   return (
@@ -12,10 +14,10 @@ function App() {
           <WelcomePage />
         </Route>
         <Route path="/log-in">
-          <Log-in />
+          <LogInPage />
         </Route>
         <Route path="/main">
-          <Log-in />
+          <MainPage />
         </Route>
       </Switch>
     </div>
