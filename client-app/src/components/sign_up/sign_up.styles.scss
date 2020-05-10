@@ -1,0 +1,28 @@
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 1rem;
+
+  .title {
+    color: white;
+    padding-top: 1.5rem;
+  }
+
+  .sign-up-form {
+    width: 100%;
+    padding: 0 4rem 4rem 4rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    margin: auto 2rem;
+
+    .sign-up-form {
+      width: 100%;
+      padding: 0 2rem 2rem 2rem;
+    }
+  }
+}
