@@ -45,7 +45,7 @@ const SignUp = () => {
         body: JSON.stringify(newUser),
       };
 
-      const res = await fetch("http://localhost:3002/api/users");
+      const res = await fetch("http://localhost:3002/api/newuser", options);
       const data = res.json();
 
       console.log("sign up data", data);
