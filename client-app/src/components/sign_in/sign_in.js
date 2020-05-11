@@ -6,12 +6,12 @@ import CustomButton from "../custom_button/custom_button";
 import "./sign_in.styles.scss";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "email") setEmail(value);
+    if (name === "username") setUsername(value);
     else if (name === "password") setPassword(value);
   };
 
@@ -19,23 +19,37 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      setEmail("");
-      setPassword("");
+      const loginUser = {
+        username: username,
+        password: password,
+      };
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginUser),
+      };
+
+      const res = await fetch("http://localhost:3002/api/log-in", options);
+      const data = res.json();
+
+      console.log("sign in data", data);
     } catch (error) {
-      console.log("Error while sign in", error.message);
+      console.log("Error while loggin in", error.message);
     }
   };
 
   return (
     <div className="sign-in">
-      <h2 className="title">LOGIN</h2>
+      <h2 className="title">LOGGA IN PÅ BÅTFORUM</h2>
       <form className="sign-in-form" onSubmit={handleSubmit}>
         <FormInput
+          type="text"
+          name="username"
+          value={username}
           handleChange={handleChange}
-          label="email"
-          name="email"
-          type="email"
-          value={email}
+          label={"Användarnamn"}
           required
         />
         <FormInput
@@ -48,10 +62,8 @@ const SignIn = () => {
         />
 
         <div className="buttons">
-          <CustomButton type="submit">Login with email</CustomButton>
-          <CustomButton handleClick={signInWithGoogle} isGoogleSignIn>
-            Login with Google
-          </CustomButton>
+          <CustomButton type="submit">Logga in</CustomButton>
+          <CustomButton type="submit">Registrera dig</CustomButton>
         </div>
       </form>
     </div>
