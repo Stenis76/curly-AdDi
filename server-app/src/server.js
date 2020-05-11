@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
+const cors = require("cors");
 require("dotenv").config();
 
 const { run } = require("./mongo");
@@ -8,6 +9,9 @@ const { run } = require("./mongo");
 /* Import routes */
 const postRouter = require("./routers/post.router");
 const userRouter = require("./routers/user.router");
+
+/* Middelwares */
+app.use(cors());
 
 //use sessions for tracking logins
 app.use(
@@ -17,7 +21,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-/* Make sure to parse req.body as JSON */
+// Make sure to parse req.body as JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
