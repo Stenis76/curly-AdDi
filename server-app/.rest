@@ -2,16 +2,16 @@
 // ----- USER ------ // 
 ###
 // GET ONE USER BY ID
-GET http://localhost:8080/api/users/5eb294dc5ecfbb162830364e
+GET http://localhost:3002/api/users/5eb294dc5ecfbb162830364e
 
 ###
 // GET ALL USERS
-GET http://localhost:8080/api/users
+GET http://localhost:3002/api/users
 
 
 ###
 // CREATE A USER
-POST http://localhost:8080/api/newuser
+POST http://localhost:3002/api/newuser
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 // LOGIN
-POST http://localhost:8080/api/log-in
+POST http://localhost:3002/api/log-in
 Content-Type: application/json
 
 {
@@ -33,12 +33,12 @@ Content-Type: application/json
 
 ###
 // DELETE USER
-DELETE http://localhost:8080/api/users/5eb296c5958d4620bcfd7240
+DELETE http://localhost:3002/api/users/5eb296c5958d4620bcfd7240
 
 
 ###
 // UPDATE USER
-PUT   http://localhost:8080/api/users/5eb3b5588d7b0b3312fd658c
+PUT   http://localhost:3002/api/users/5eb3b5588d7b0b3312fd658c
 Content-Type: application/json
 
 {
@@ -53,35 +53,35 @@ Content-Type: application/json
 // ----- POSTS ----- ///
 ###
 // GET ALL POSTS
-GET http://localhost:8080/api/posts
+GET http://localhost:3002/api/posts
 
 ###
 // GET POST BY ID
-GET http://localhost:8080/api/posts/postid
+GET http://localhost:3002/api/posts/postid
 
 ###
 // CREATE A POST
-POST http://localhost:8080/api/posts
+POST http://localhost:3002/api/posts
 Content-Type: application/json
 
 {
     "title": "Test title 5",
-    "author": "Adam",
-    "content": "text text text text text text text text"  
+    "username": "Adam",
+    "content": "textddd text text text text text text text"  
 }
 
 ###
 // DELETE POST BY ID
-DELETE http://localhost:8080/api/posts/postid
+DELETE http://localhost:3002/api/posts/postid
 
 ###
 // UPDATE POST BY ID
-PUT http://localhost:8080/api/posts/postid
+PUT http://localhost:3002/api/posts/postid
 Content-Type: application/json
 
 {
     "title": "Updated title",
-    "author": "Updated Adam",
+    "username": "Updated Adam",
     "content": "Updated text text text text text text text text"  
 }
 

@@ -56,6 +56,8 @@ const SignUp = () => {
 
       if (data.status === "Authenticated") {
         history.push("/main");
+      } else if (data.status === "User-name already taken") {
+        alert("Användarnamnet är upptaget!");
       }
 
       // if user set usercontext to user

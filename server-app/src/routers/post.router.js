@@ -21,12 +21,15 @@ router.get("/api/posts/:postId", (req, res) => {
 
 // CREATE
 router.post("/api/posts", (req, res) => {
+  // TODO maybe check if user is authenticated ?
+
   const post = new Post({
     title: req.body.title,
-    author: req.body.author,
+    username: req.body.username,
     content: req.body.content,
     date: new Date().toString(),
   });
+
   post
     .save()
     .then((data) => res.status(201).json(data))
@@ -51,7 +54,7 @@ router.put("/api/posts/:postId", async (req, res) => {
       {
         $set: {
           title: req.body.title,
-          author: req.body.author,
+          username: req.body.username,
           content: req.body.content,
         },
       }

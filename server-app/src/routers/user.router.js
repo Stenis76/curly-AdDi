@@ -32,12 +32,23 @@ router.post("/api/newuser", (req, res) => {
     password: req.body.password,
   });
 
-  // if user exists   res.status(401).json({ status: "User-name already taken" });
+  User.findOne({ username: user.username }, (err, queriedUser) => {
+    if (err) {
+      console.log("Error finding user in database", err);
+      return;
+    }
 
-  user
-    .save()
-    .then((data) => res.status(201).json({ status: "Authenticated" }))
-    .catch((err) => res.status(400).json(err));
+    console.log("find-one", queriedUser);
+
+    if (!queriedUser) {
+      user
+        .save()
+        .then((data) => res.status(201).json({ status: "Authenticated" }))
+        .catch((err) => res.status(400).json(err));
+    } else {
+      res.status(401).json({ status: "User-name already taken" });
+    }
+  });
 });
 
 // LOGIN
