@@ -1,5 +1,30 @@
 .header {
-  background-color: #1974d3;
+  background-color: #050058;
   display: flex;
   justify-content: space-between;
+  color: white;
+
+  .avatar {
+    display: flex;
+    margin: 1rem 2rem;
+    p {
+      padding-left: 1rem;
+      font-size: 1rem;
+      color: white;
+    }
+    #avatarImage {
+      width: 3rem;
+      border-radius: 2rem;
+    }
+  }
+  h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 2px 3px 3px #ce9b01;
+  }
+
+  #cog {
+    font-size: 1.5rem;
+    margin: 2rem;
+  }
 }
