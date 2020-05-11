@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { Switch, Route } from "react-router-dom";
 
 import SignUp from "../../components/sign_up/sign_up";
-import "./styles.scss";
 import SignIn from "../../components/sign_in/sign_in";
+
+import "./styles.scss";
 
 const WelcomePage = () => {
   return (
@@ -10,8 +12,15 @@ const WelcomePage = () => {
       <div className="greeter">
         <h1>Båtforum</h1>
       </div>
-      <SignIn />
-      <SignUp />
+
+      <Switch>
+        <Route exact path="/welcome">
+          <SignIn />
+        </Route>
+        <Route path="/welcome/register">
+          <SignUp />
+        </Route>
+      </Switch>
     </div>
   );
 };

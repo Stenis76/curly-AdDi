@@ -1,18 +1,19 @@
 .sign-in {
-  background: #0f0a3c; /* fallback for old browsers */
+  background: #0000802c; /* fallback for old browsers */
 
   background-blend-mode: overlay, hard-light, normal;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-  width: 100%;
-  max-width: 38rem;
-  border-radius: 1rem;
+  justify-content: center;
+
+  width: 33rem;
+  height: 23rem;
+  border-radius: 0.3rem;
 
   .title {
-    color: white;
+    color: #ffe6b6;
     padding-top: 1.5rem;
   }
 

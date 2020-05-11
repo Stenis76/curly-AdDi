@@ -31,9 +31,12 @@ router.post("/api/newuser", (req, res) => {
     username: req.body.username,
     password: req.body.password,
   });
+
+  // if user exists   res.status(401).json({ status: "User-name already taken" });
+
   user
     .save()
-    .then((data) => res.status(201).json(data))
+    .then((data) => res.status(201).json({ status: "Authenticated" }))
     .catch((err) => res.status(400).json(err));
 });
 
@@ -42,12 +45,12 @@ router.post("/api/log-in", (req, res) => {
   if (req.body.username && req.body.password) {
     User.authenticate(req.body.username, req.body.password, (err, user) => {
       if (err) {
-        res.status(401).json(err);
+        res.status(401).json({ status: "Wrong name" });
       } else if (user) {
         req.session.userId = user._id;
-        res.json(user);
+        res.status(200).json({ status: "Authenticated" });
       } else {
-        res.json("wrong pass");
+        res.status(401).json({ status: "Wrong password" });
       }
     });
   }
