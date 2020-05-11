@@ -10,9 +10,17 @@ const ForumPost = () => {
         <p>Mr segelbåt</p>
       </div>
       <div className="post">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
-        tempora dolorem quidem, distinctio quas nam. Natus ratione hic quia
-        fugit, molestiae at sunt perspiciatis autem eius nisi corrupti odit eos.
+        <div className="postheader">
+          <h4 className="role">Member</h4>
+          <h4 className="date">posted: 2020-05-11</h4>
+        </div>
+        <h4>Rubrik</h4>
+        <p className="content">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
+          tempora dolorem quidem, distinctio quas nam. Natus ratione hic quia
+          fugit, molestiae at sunt perspiciatis autem eius nisi corrupti odit
+          eos.
+        </p>
       </div>
     </div>
   );
