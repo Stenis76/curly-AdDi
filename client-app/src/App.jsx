@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "./contexts/user-contexts/context";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -8,7 +9,7 @@ import MainPage from "./pages/main-page";
 import "./app.css";
 
 function App() {
-  // if (userAuth) redirect to /main
+  const { isAuthenticated } = useContext(UserContext);
 
   return (
     <div className="App">
@@ -17,9 +18,14 @@ function App() {
         <Route path="/welcome">
           <WelcomePage />
         </Route>
-        <Route path="/main">
-          <MainPage />
-        </Route>
+        <Route
+          path="/main"
+          render={() => {
+            if (!isAuthenticated) {
+              return <Redirect to="/welcome" />;
+            } else return <MainPage />;
+          }}
+        />
       </Switch>
     </div>
   );

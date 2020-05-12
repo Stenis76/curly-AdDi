@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.scss";
 import CustomButton from "../custom_button/custom_button";
 
-const ForumPostForm = () => {
+const PostModal = () => {
   return (
     <div>
       <div className="form-post-container">
@@ -15,4 +15,4 @@ const ForumPostForm = () => {
   );
 };
 
-export default ForumPostForm;
+export default PostModal;

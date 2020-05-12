@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Loader from "react-loader-spinner";
-
+import UserContext from "../../contexts/user-contexts/context";
 import FormInput from "../form_input/form_input";
 import CustomButton from "../custom_button/custom_button";
 
@@ -13,6 +13,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const { login } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,25 +25,17 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      const loginUser = {
-        username: username,
-        password: password,
-      };
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginUser),
-      };
       setLoading(true);
-      const res = await fetch("http://localhost:3002/api/log-in", options);
-      const data = await res.json();
+      const response = await login(username, password);
       setLoading(false);
-      console.log(data);
+      console.log(response);
 
-      if (data.status === "Authenticated") {
+      if (response === "Authenticated") {
         history.push("/main");
+      } else if (response === "Wrong password") {
+        alert("fel lösenord");
+      } else if (response === "Wrong name") {
+        alert("användarnamnet finns ej");
       }
     } catch (error) {
       console.log("Error while loggin in", error.message);

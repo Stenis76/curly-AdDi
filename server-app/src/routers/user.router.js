@@ -59,7 +59,16 @@ router.post("/api/log-in", (req, res) => {
         res.status(401).json({ status: "Wrong name" });
       } else if (user) {
         req.session.userId = user._id;
-        res.status(200).json({ status: "Authenticated" });
+        res
+          .status(200)
+          .json({
+            status: "Authenticated",
+            user: {
+              username: user.username,
+              name: user.name,
+              email: user.email,
+            },
+          });
       } else {
         res.status(401).json({ status: "Wrong password" });
       }
