@@ -9,7 +9,11 @@ const PostModal = (props) => {
   const handleClick = () => props.setShowPostModal(props.showPostModal);
 
   const [state, setState] = useState({
-    name: "",
+    title: "",
+    username: "",
+    content: "",
+    date: "",
+    value: "",
   });
 
   const handleChange = (event) => {
@@ -18,20 +22,20 @@ const PostModal = (props) => {
       ...state,
       [name]: value,
     });
-    console.log(value);
+    console.log(name);
   };
   return (
     <div className="modal-container">
       <div className="input-form">
         <div className="modal-header">
           <FormInput
+            id="title-form"
             handleChange={handleChange}
             label="Rubrik"
             name="title"
             type="text"
             value={state.value}
             required
-            className="title-form"
           ></FormInput>
           <FontAwesomeIcon id="exit" icon={faTimes} onClick={handleClick} />
         </div>
