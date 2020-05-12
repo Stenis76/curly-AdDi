@@ -10,11 +10,13 @@ import "./styles.scss";
 
 const Header = (props) => {
   const { logout } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+
   return (
     <div className="header">
       <div className="avatar">
         <img id="avatarImage" src={UserAvatar} alt="avatar" />
-        <p>Hej "username"</p>
+        <p>Hej {user.name}</p>
       </div>
       <h1>Båtforum</h1>
       <div className="controls">

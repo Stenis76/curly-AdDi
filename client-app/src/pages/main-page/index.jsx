@@ -27,7 +27,9 @@ const MainPage = () => {
     <div className="main-page">
       <Header setShowPostModal={setShowPostModal} />
       <div className="main-content">
-        {showPostModal ? <PostModal /> : null}
+        {showPostModal ? (
+          <PostModal setShowPostModal={setShowPostModal} />
+        ) : null}
         <div className="forum">
           {loading ? (
             <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
