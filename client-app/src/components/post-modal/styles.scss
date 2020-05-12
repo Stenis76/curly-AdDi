@@ -1,0 +1,24 @@
+.form-post-container {
+  margin-top: 5rem;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #ce9b01;
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+}
+
+.input-forum-post {
+  box-sizing: border-box;
+  position: relative;
+  background-color: white;
+  margin: 1rem;
+  width: 95%;
+  height: 70%;
+  line-height: 1rem;
+  border-radius: 0.5rem;
+}

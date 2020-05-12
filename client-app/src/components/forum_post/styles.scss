@@ -1,9 +1,11 @@
 .post-container {
   display: flex;
   margin: 1rem;
-  width: 100%;
+
   background-color: white;
-  border: 2px solid black;
+  border-radius: 15px;
+  border: 3px solid #050058;
+  background-clip: padding-box;
 
   .avatar {
     display: flex;
@@ -21,6 +23,10 @@
     }
   }
   .post {
-    background-color: white;
+    .postheader {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 1rem;
+    }
   }
 }

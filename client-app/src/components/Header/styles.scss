@@ -23,8 +23,12 @@
     text-shadow: 2px 3px 3px #ce9b01;
   }
 
-  #cog {
-    font-size: 1.5rem;
+  .controls {
+    font-size: 2rem;
     margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 9rem;
   }
 }
