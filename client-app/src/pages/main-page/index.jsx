@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Loader from "react-loader-spinner";
 
+import moment from "moment";
+
 import Header from "../../components/Header";
 import ForumPost from "../../components/forum_post";
 import PostModal from "../../components/post-modal";
@@ -21,20 +23,31 @@ const MainPage = () => {
         setLoading(false);
       });
   }, []);
-  console.log(posts);
+
+  const openPostModal = () => setShowPostModal(true);
+  const closePostModal = () => setShowPostModal(false);
+
+  const addPost = (post) => setPosts([...posts, post]);
 
   return (
     <div className="main-page">
-      <Header setShowPostModal={setShowPostModal} />
+      <Header openPostModal={openPostModal} />
       <div className="main-content">
         {showPostModal ? (
-          <PostModal setShowPostModal={setShowPostModal} />
+          <PostModal closePostModal={closePostModal} addPost={addPost} />
         ) : null}
         <div className="forum">
           {loading ? (
             <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
           ) : (
-            posts.map((post) => <ForumPost key={post._id} post={post} />)
+            posts
+              // .sort((a, b) => {
+              //   const bool = moment(a.date).isBefore(b.date);
+              //   console.log("hello", bool);
+
+              //   return bool;
+              // })
+              .map((post) => <ForumPost key={post._id} post={post} />)
           )}
         </div>
         <div className="sidebar">Kanske nån sidebar här</div>

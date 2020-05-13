@@ -14,7 +14,7 @@ function UserContextProvider(props) {
       body: JSON.stringify({ username, password }),
     };
 
-    const res = await fetch("http://localhost:3002/api/log-in", options);
+    const res = await fetch("http://localhost:3002/api/login", options);
     const data = await res.json();
     if (data.user) {
       setUser(data.user);
@@ -23,9 +23,12 @@ function UserContextProvider(props) {
 
     return data.status;
   }
+
   function logout() {
     setUser(undefined);
     setIsAuthenticated(false);
+
+    fetch("http://localhost:3002/api/logout");
   }
 
   return (
