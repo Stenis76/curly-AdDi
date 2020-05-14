@@ -135,6 +135,7 @@ router.delete("/api/users/:userId", async (req, res) => {
 
 // UPDATE
 router.put("/api/users/:userId", async (req, res) => {
+  console.log("updatera användaren");
   try {
     const updatedUser = await User.updateOne(
       { _id: req.params.userId },

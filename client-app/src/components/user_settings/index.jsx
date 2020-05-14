@@ -2,18 +2,20 @@ import React, { useState, useEffect, useContext } from "react";
 import "./styles.scss";
 import FormInput from "../form_input/form_input";
 import Loader from "react-loader-spinner";
-
 import UserContext from "../../contexts/user-contexts/context";
+
 import CustomButton from "../custom_button/custom_button";
 
 const UserSettings = () => {
+  const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext);
+
   const [state, setState] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const [loading, setLoading] = useState(false);
   const { setUser, setIsAuthenticated } = useContext(UserContext);
 
   const handleChange = (event) => {
@@ -37,30 +39,33 @@ const UserSettings = () => {
         email: state.email,
         password: state.password,
       };
+
       const options = {
-        method: "PULL",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedUser),
       };
       setLoading(true);
+
       const res = await fetch(
-        "http://localhost:3002//api/users/:userId",
+        "http://localhost:3002/api/users/" + user._id,
         options
       );
+
+      console.log(res);
       const data = await res.json();
-      console.log(data);
 
       //stäng settings fliken
       setLoading(false);
 
-      if (data.status === "Authenticated") {
-        setUser(data.user);
-        setIsAuthenticated(true);
-      } else if (data.status === "") {
-        alert("inga tomma rutor!");
-      }
+      // if (data.status === "Authenticated") {
+      //   setUser(data.user);
+      //   setIsAuthenticated(true);
+      // } else if (data.status === "") {
+      //   alert("inga tomma rutor!");
+      // }
     } catch (error) {
       console.log("kan ej uppdatera användare", error.message);
       setLoading(false);
