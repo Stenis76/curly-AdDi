@@ -138,7 +138,7 @@ router.put("/api/users/:userId", async (req, res) => {
   try {
     const updatedUser = await User.updateOne(
       { _id: req.params.userId },
-      { $set: { name: req.body.name, password: req.body.password } }
+      { $set: { email: req.body.email, password: req.body.password } }
     );
     res.status(200).json(updatedUser);
   } catch (err) {

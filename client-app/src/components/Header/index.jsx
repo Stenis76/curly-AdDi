@@ -8,7 +8,7 @@ import UserContext from "../../contexts/user-contexts/context";
 import UserAvatar from "../../resources/hair-and-beard-png-3.png";
 import "./styles.scss";
 
-const Header = ({ openPostModal }) => {
+const Header = ({ openPostModal, openSettings }) => {
   const { logout } = useContext(UserContext);
   const { user } = useContext(UserContext);
 
@@ -21,7 +21,7 @@ const Header = ({ openPostModal }) => {
       <h1>Båtforum</h1>
       <div className="controls">
         <FontAwesomeIcon onClick={openPostModal} id="new" icon={faPlus} />
-        <FontAwesomeIcon id="cog" icon={faCog} />
+        <FontAwesomeIcon onClick={openSettings} id="cog" icon={faCog} />
         <FontAwesomeIcon
           onClick={logout}
           id="sign-out-alt"

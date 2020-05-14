@@ -6,12 +6,14 @@ import moment from "moment";
 import Header from "../../components/Header";
 import ForumPost from "../../components/forum_post";
 import PostModal from "../../components/post-modal";
+import UserSettings from "../../components/user_settings";
 
 import "./styles.scss";
 import Sidebar from "../../components/sidebar";
 
 const MainPage = () => {
   const [showPostModal, setShowPostModal] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [postToEdit, setPostToEdit] = useState(undefined);
@@ -49,7 +51,9 @@ const MainPage = () => {
     setShowPostModal(false);
     setPostToEdit(undefined);
   };
+  const openSettings = () => setShowSettings(true);
 
+  const closeSettings = () => setShowSettings(false);
   const addPost = (post) => setPosts([...posts, post]);
 
   const editPost = (updatedPost) => {
@@ -65,7 +69,7 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <Header openPostModal={openPostModal} />
+      <Header openPostModal={openPostModal} openSettings={openSettings} />
       <div className="main-content">
         {showPostModal ? (
           <PostModal
@@ -95,7 +99,7 @@ const MainPage = () => {
             ))
           )}
         </div>
-        <Sidebar />
+        {showSettings ? <UserSettings /> : <Sidebar />}
       </div>
     </div>
   );
