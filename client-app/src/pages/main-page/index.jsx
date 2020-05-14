@@ -8,6 +8,7 @@ import ForumPost from "../../components/forum_post";
 import PostModal from "../../components/post-modal";
 
 import "./styles.scss";
+import Sidebar from "../../components/sidebar";
 
 const MainPage = () => {
   const [showPostModal, setShowPostModal] = useState(false);
@@ -50,7 +51,7 @@ const MainPage = () => {
               .map((post) => <ForumPost key={post._id} post={post} />)
           )}
         </div>
-        <div className="sidebar">Kanske nån sidebar här</div>
+        <Sidebar />
       </div>
     </div>
   );
