@@ -5,6 +5,11 @@
 GET http://localhost:3002/api/users/5eb294dc5ecfbb162830364e
 
 ###
+// GET ONE USER BY USERNAME
+GET http://localhost:3002/api
+
+
+###
 // GET ALL USERS
 GET http://localhost:3002/api/users
 

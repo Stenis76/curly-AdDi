@@ -2,13 +2,12 @@
   height: 100vh;
 
   .header {
-    height: 5rem;
+    height: 5.5rem;
   }
 
   .main-content {
-    height: 90%;
+    height: calc(100% - 5.5rem);
     width: 100%;
-    // height: 100%;
     display: flex;
     flex-wrap: nowrap;
 
@@ -18,9 +17,13 @@
       overflow-y: scroll;
       display: grid;
       justify-items: center;
-      justify-content: center;
-      grid-template-columns: 30rem;
+      align-items: center;
       gap: 1rem;
+
+      .forum-post {
+        max-width: 40rem;
+        min-width: 20rem;
+      }
     }
   }
 }

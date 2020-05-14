@@ -7,20 +7,39 @@ const User = require("../models/user.model");
 router.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
+    console.log("-------------------", JSON.parse(req));
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// GET ONE
+// GET ONE BY ID
 router.get("/api/users/:userId", async (req, res) => {
   try {
-    const post = await User.findById(req.params.userId);
-    res.status(200).json(post);
+    const user = await User.findById(req.params.userId);
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+// GET ONE BY USERNAME
+router.get("/api", (req, res) => {
+  console.log("try-----------");
+  // try {
+  //   User.findOne({ username: req.params.username }, (err, user) => {
+  //     if (err) {
+  //       console.log("Error finding user in database", err);
+  //       return;
+  //     }
+  //     console.log("-----------", user);
+
+  //     res.status(200).json(user);
+  //   });
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
 });
 
 // CREATE
@@ -62,6 +81,7 @@ router.post("/api/login", (req, res) => {
         res.status(401).json({ status: "Wrong name" });
       } else if (user) {
         req.session.userId = user._id;
+
         console.log("session " + req.session.userId);
         res.status(200).json({
           status: "Authenticated",

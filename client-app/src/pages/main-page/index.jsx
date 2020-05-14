@@ -16,7 +16,6 @@ const MainPage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
     fetch("http://localhost:3002/api/posts")
       .then((res) => res.json())
       .then((posts) => {
@@ -39,16 +38,15 @@ const MainPage = () => {
         ) : null}
         <div className="forum">
           {loading ? (
-            <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
+            <>
+              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
+              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
+              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
+              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
+              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
+            </>
           ) : (
-            posts
-              // .sort((a, b) => {
-              //   const bool = moment(a.date).isBefore(b.date);
-              //   console.log("hello", bool);
-
-              //   return bool;
-              // })
-              .map((post) => <ForumPost key={post._id} post={post} />)
+            posts.map((post) => <ForumPost key={post._id} post={post} />)
           )}
         </div>
         <Sidebar />

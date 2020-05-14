@@ -10,6 +10,8 @@ const { run } = require("./mongo");
 const postRouter = require("./routers/post.router");
 const userRouter = require("./routers/user.router");
 
+const loggedInUsers = {};
+
 // run the database
 run();
 

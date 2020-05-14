@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.scss";
 
 const Sidebar = () => {
-  return <div className="sidebar-container">Här är vår sidebar</div>;
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3002/api/users")
+      .then((res) => res.json())
+      .then((users) => {
+        setUsers(users);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div className="sidebar-container">
+      <h2>Medlemmar</h2>
+      <ul>
+        {users.map((user) => (
+          <li key={user._id}>{user.username}</li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default Sidebar;
