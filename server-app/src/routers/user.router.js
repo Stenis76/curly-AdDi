@@ -2,9 +2,20 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/user.model");
+const authenticatedUsers = require("../authenticatedUsers.js");
 
 // GET ALL
 router.get("/api/users", async (req, res) => {
+  // console.log("users", authenticatedUsers.users);
+
+  // if (!authenticatedUsers.isAuthenticated(req.sessionID)) {
+  //   res.status(500).json("Not authenticated");
+  //   console.log("Not authenticated");
+  //   return;
+  // }
+  const { userId } = req.session;
+  console.log("userId", userId);
+
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -13,15 +24,25 @@ router.get("/api/users", async (req, res) => {
   }
 });
 
-// GET ONE
+// GET ONE BY ID
 router.get("/api/users/:userId", async (req, res) => {
   try {
-    const post = await User.findById(req.params.userId);
-    res.status(200).json(post);
+    const user = await User.findById(req.params.userId);
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+// GET ONE BY USERNAME
+// router.get("/api/users/:username", (req, res) => {
+//   try {
+//     const user = User.findOne(req.params.username);
+//     res.status(200).json(user);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 // CREATE
 router.post("/api/newuser", (req, res) => {
@@ -40,12 +61,16 @@ router.post("/api/newuser", (req, res) => {
     }
 
     if (!queriedUser) {
-      User.create(user, (err, user) => {
-        if (error) {
+      User.create(userData, (err, user) => {
+        if (err) {
+          console.log(err);
+
           res.status(400).json(err);
         } else {
-          req.session.userId = user._id;
-          res.status(201).json({ status: "Authenticated" });
+          // store authentication session
+          authenticatedUsers.addAuthenticated(user._id);
+
+          res.status(201).json({ status: "Authenticated", user });
         }
       });
     } else {
@@ -62,10 +87,14 @@ router.post("/api/login", (req, res) => {
         res.status(401).json({ status: "Wrong name" });
       } else if (user) {
         req.session.userId = user._id;
-        console.log("session " + req.session.userId);
+
+        // store authentication session
+        authenticatedUsers.addAuthenticated(user._id);
+
         res.status(200).json({
           status: "Authenticated",
           user: {
+            _id: user._id,
             username: user.username,
             name: user.name,
             email: user.email,
@@ -79,7 +108,7 @@ router.post("/api/login", (req, res) => {
 });
 
 // LOGOUT
-router.get("/api/logout", (req, res, next) => {
+router.get("/api/logout/:userId", (req, res, next) => {
   if (req.session) {
     // delete session object
     req.session.destroy(function (err) {
@@ -90,6 +119,8 @@ router.get("/api/logout", (req, res, next) => {
       }
     });
   }
+
+  authenticatedUsers.removeAuthenticated(req.params.userId);
 });
 
 // DELETE

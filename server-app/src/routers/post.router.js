@@ -27,20 +27,24 @@ router.post("/api/posts", (req, res) => {
     title: req.body.title,
     username: req.body.username,
     content: req.body.content,
+    authorId: req.body.authorId,
     date: new Date().toString(),
   });
 
-  post
-    .save()
-    .then((data) => res.status(201).json(data))
-    .catch((err) => res.status(400).json(err));
+  post.save((err, post) => {
+    if (err) res.status(400).json(err);
+    else res.status(201).json(post);
+    console.log("post", post.id);
+  });
+  // .then((data) => res.status(201).json(data))
+  // .catch((err) => res.status(400).json(err));
 });
 
 // DELETE
 router.delete("/api/posts/:postId", async (req, res) => {
   try {
     const removedPost = await Post.deleteOne({ _id: req.params.postId });
-    res.status(200).json(removedPost);
+    res.status(200).json({ status: "removed post" });
   } catch (err) {
     res.status(500).json(err);
   }

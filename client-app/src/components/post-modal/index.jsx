@@ -11,13 +11,13 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import "./styles.scss";
 
-const PostModal = ({ closePostModal, addPost }) => {
+const PostModal = ({ closePostModal, addPost, postToEdit, editPost }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
 
   const [state, setState] = useState({
-    title: "",
-    content: "",
+    title: (postToEdit && postToEdit.title) || "",
+    content: (postToEdit && postToEdit.content) || "",
   });
 
   const handleChange = (event) => {
@@ -37,25 +37,56 @@ const PostModal = ({ closePostModal, addPost }) => {
       const newPost = {
         title: state.title,
         username: user.username,
+        authorId: user._id,
         content: state.content,
       };
 
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPost),
-      };
+      if (postToEdit) {
+        console.log("got to edit");
 
-      const res = await fetch("http://localhost:3002/api/posts", options);
-      const data = await res.json();
+        const options = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPost),
+        };
 
-      if (data.message) {
-        return alert("Fyll i alla fält i inlägget!");
+        const res = await fetch(
+          "http://localhost:3002/api/posts/" + postToEdit._id,
+          options
+        );
+        const data = await res.json();
+
+        if (data.message) {
+          return alert("Fyll i alla fält i inlägget!");
+        }
+
+        const updatedPost = {
+          ...postToEdit,
+          ...newPost,
+        };
+
+        editPost(updatedPost);
+      } else {
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPost),
+        };
+
+        const res = await fetch("http://localhost:3002/api/posts", options);
+        const data = await res.json();
+
+        if (data.message) {
+          return alert("Fyll i alla fält i inlägget!");
+        }
+
+        addPost(data);
       }
 
-      addPost(data);
       setLoading(false);
       closePostModal();
     } catch (error) {
@@ -68,15 +99,17 @@ const PostModal = ({ closePostModal, addPost }) => {
     <div className="modal-container">
       <div className="input-form">
         <div className="modal-header">
-          <FormInput
-            id="title-form"
-            handleChange={handleChange}
-            label="Rubrik"
-            name="title"
-            type="text"
-            value={state.title}
-            required
-          ></FormInput>
+          <div>
+            <FormInput
+              id="title-form"
+              handleChange={handleChange}
+              label="Rubrik"
+              name="title"
+              type="text"
+              value={state.title}
+              required
+            ></FormInput>
+          </div>
           <FontAwesomeIcon id="exit" icon={faTimes} onClick={closePostModal} />
         </div>
         <textarea
