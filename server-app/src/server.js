@@ -10,17 +10,21 @@ const { run } = require("./mongo");
 const postRouter = require("./routers/post.router");
 const userRouter = require("./routers/user.router");
 
-/* Middelwares */
-app.use(cors());
+// run the database
+run();
 
+/* Middelwares */
 //use sessions for tracking logins
 app.use(
   session({
     secret: "work hard",
-    resave: true,
+    resave: false,
     saveUninitialized: false,
   })
 );
+
+app.use(cors());
+
 // Make sure to parse req.body as JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,10 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(userRouter);
 app.use(postRouter);
 
-// run the database
-run();
-
 const PORT = process.env.PORT || 8080;
+
 /* Start server */
 app.listen(PORT, () =>
   console.log(`Server is up and running on port: ${PORT}`)

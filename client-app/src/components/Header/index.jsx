@@ -8,21 +8,19 @@ import UserContext from "../../contexts/user-contexts/context";
 import UserAvatar from "../../resources/hair-and-beard-png-3.png";
 import "./styles.scss";
 
-const Header = (props) => {
+const Header = ({ openPostModal }) => {
   const { logout } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+
   return (
     <div className="header">
       <div className="avatar">
         <img id="avatarImage" src={UserAvatar} alt="avatar" />
-        <p>Hej "username"</p>
+        <p>Hej {user.name}</p>
       </div>
       <h1>Båtforum</h1>
       <div className="controls">
-        <FontAwesomeIcon
-          onClick={props.setShowPostModal}
-          id="new"
-          icon={faPlus}
-        />
+        <FontAwesomeIcon onClick={openPostModal} id="new" icon={faPlus} />
         <FontAwesomeIcon id="cog" icon={faCog} />
         <FontAwesomeIcon
           onClick={logout}
