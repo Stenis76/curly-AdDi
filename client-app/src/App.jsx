@@ -11,6 +11,8 @@ import "./app.css";
 function App() {
   const { isAuthenticated } = useContext(UserContext);
 
+  console.log("isAuth", isAuthenticated);
+
   return (
     <div className="App">
       <Switch>

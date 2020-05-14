@@ -14,6 +14,7 @@ const MainPage = () => {
   const [showPostModal, setShowPostModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [postToEdit, setPostToEdit] = useState(undefined);
 
   useEffect(() => {
     fetch("http://localhost:3002/api/posts")
@@ -24,17 +25,55 @@ const MainPage = () => {
       });
   }, []);
 
+  const removePost = (postId) => {
+    const options = {
+      method: "DELETE",
+    };
+    fetch("http://localhost:3002/api/posts/" + postId, options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "removed post") {
+          const updatedPosts = posts.filter((post) => post._id !== postId);
+          setPosts(updatedPosts);
+        }
+      });
+  };
+
+  const openEditModal = (postId) => {
+    setPostToEdit(posts.find((post) => post._id === postId));
+    setShowPostModal(true);
+  };
+
   const openPostModal = () => setShowPostModal(true);
-  const closePostModal = () => setShowPostModal(false);
+  const closePostModal = () => {
+    setShowPostModal(false);
+    setPostToEdit(undefined);
+  };
 
   const addPost = (post) => setPosts([...posts, post]);
+
+  const editPost = (updatedPost) => {
+    const updatedPosts = posts.map((post) => {
+      if (post._id === updatedPost._id) return updatedPost;
+      else return post;
+    });
+    // console.log("post", posts);
+    console.log("updated posts", updatedPost);
+
+    setPosts(updatedPosts);
+  };
 
   return (
     <div className="main-page">
       <Header openPostModal={openPostModal} />
       <div className="main-content">
         {showPostModal ? (
-          <PostModal closePostModal={closePostModal} addPost={addPost} />
+          <PostModal
+            closePostModal={closePostModal}
+            addPost={addPost}
+            postToEdit={postToEdit}
+            editPost={editPost}
+          />
         ) : null}
         <div className="forum">
           {loading ? (
@@ -46,7 +85,14 @@ const MainPage = () => {
               <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
             </>
           ) : (
-            posts.map((post) => <ForumPost key={post._id} post={post} />)
+            posts.map((post) => (
+              <ForumPost
+                key={post._id}
+                post={post}
+                removePost={removePost}
+                openEditModal={openEditModal}
+              />
+            ))
           )}
         </div>
         <Sidebar />

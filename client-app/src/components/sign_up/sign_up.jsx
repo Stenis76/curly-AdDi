@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+
+import UserContext from "../../contexts/user-contexts/context";
 
 import Loader from "react-loader-spinner";
 
@@ -18,6 +20,7 @@ const SignUp = () => {
   });
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const { setUser, setIsAuthenticated } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -55,12 +58,12 @@ const SignUp = () => {
       setLoading(false);
 
       if (data.status === "Authenticated") {
+        setUser(data.user);
+        setIsAuthenticated(true);
         history.push("/main");
       } else if (data.status === "User-name already taken") {
         alert("Användarnamnet är upptaget!");
       }
-
-      // if user set usercontext to user
     } catch (error) {
       console.log("Error while sign up", error.message);
       setLoading(false);

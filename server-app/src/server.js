@@ -10,26 +10,30 @@ const { run } = require("./mongo");
 const postRouter = require("./routers/post.router");
 const userRouter = require("./routers/user.router");
 
-const loggedInUsers = {};
-
 // run the database
 run();
 
 /* Middelwares */
-//use sessions for tracking logins
-app.use(
-  session({
-    secret: "work hard",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
 app.use(cors());
 
 // Make sure to parse req.body as JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+//use sessions for tracking logins
+app.use(
+  session({
+    name: "hello",
+    secret: "work hard",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 60 * 60 * 24,
+      secure: false,
+      sameSite: true,
+    },
+  })
+);
 
 /* Add API resourses */
 app.use(userRouter);

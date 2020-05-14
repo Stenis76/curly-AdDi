@@ -24,11 +24,14 @@ function UserContextProvider(props) {
     return data.status;
   }
 
+  console.log("user", user);
+
   function logout() {
+    console.log("id", user._id);
+
+    fetch("http://localhost:3002/api/logout/" + user._id);
     setUser(undefined);
     setIsAuthenticated(false);
-
-    fetch("http://localhost:3002/api/logout");
   }
 
   return (
@@ -36,7 +39,9 @@ function UserContextProvider(props) {
       {...props}
       value={{
         isAuthenticated,
+        setIsAuthenticated,
         user,
+        setUser,
         login,
         logout,
       }}

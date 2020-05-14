@@ -2,11 +2,11 @@
 // ----- USER ------ // 
 ###
 // GET ONE USER BY ID
-GET http://localhost:3002/api/users/5eb294dc5ecfbb162830364e
+GET http://localhost:3002/api/users/5eb924d7c7b0833411031925
 
 ###
 // GET ONE USER BY USERNAME
-GET http://localhost:3002/api
+GET http://localhost:3002/api/users/Adam6
 
 
 ###

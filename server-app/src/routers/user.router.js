@@ -2,12 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/user.model");
+const authenticatedUsers = require("../authenticatedUsers.js");
 
 // GET ALL
 router.get("/api/users", async (req, res) => {
+  // console.log("users", authenticatedUsers.users);
+
+  // if (!authenticatedUsers.isAuthenticated(req.sessionID)) {
+  //   res.status(500).json("Not authenticated");
+  //   console.log("Not authenticated");
+  //   return;
+  // }
+  const { userId } = req.session;
+  console.log("userId", userId);
+
   try {
     const users = await User.find();
-    console.log("-------------------", JSON.parse(req));
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json(err);
@@ -25,22 +35,14 @@ router.get("/api/users/:userId", async (req, res) => {
 });
 
 // GET ONE BY USERNAME
-router.get("/api", (req, res) => {
-  console.log("try-----------");
-  // try {
-  //   User.findOne({ username: req.params.username }, (err, user) => {
-  //     if (err) {
-  //       console.log("Error finding user in database", err);
-  //       return;
-  //     }
-  //     console.log("-----------", user);
-
-  //     res.status(200).json(user);
-  //   });
-  // } catch (err) {
-  //   res.status(500).json(err);
-  // }
-});
+// router.get("/api/users/:username", (req, res) => {
+//   try {
+//     const user = User.findOne(req.params.username);
+//     res.status(200).json(user);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 // CREATE
 router.post("/api/newuser", (req, res) => {
@@ -59,12 +61,16 @@ router.post("/api/newuser", (req, res) => {
     }
 
     if (!queriedUser) {
-      User.create(user, (err, user) => {
-        if (error) {
+      User.create(userData, (err, user) => {
+        if (err) {
+          console.log(err);
+
           res.status(400).json(err);
         } else {
-          req.session.userId = user._id;
-          res.status(201).json({ status: "Authenticated" });
+          // store authentication session
+          authenticatedUsers.addAuthenticated(user._id);
+
+          res.status(201).json({ status: "Authenticated", user });
         }
       });
     } else {
@@ -82,10 +88,13 @@ router.post("/api/login", (req, res) => {
       } else if (user) {
         req.session.userId = user._id;
 
-        console.log("session " + req.session.userId);
+        // store authentication session
+        authenticatedUsers.addAuthenticated(user._id);
+
         res.status(200).json({
           status: "Authenticated",
           user: {
+            _id: user._id,
             username: user.username,
             name: user.name,
             email: user.email,
@@ -99,7 +108,7 @@ router.post("/api/login", (req, res) => {
 });
 
 // LOGOUT
-router.get("/api/logout", (req, res, next) => {
+router.get("/api/logout/:userId", (req, res, next) => {
   if (req.session) {
     // delete session object
     req.session.destroy(function (err) {
@@ -110,6 +119,8 @@ router.get("/api/logout", (req, res, next) => {
       }
     });
   }
+
+  authenticatedUsers.removeAuthenticated(req.params.userId);
 });
 
 // DELETE
