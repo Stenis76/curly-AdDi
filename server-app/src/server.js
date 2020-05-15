@@ -14,7 +14,12 @@ const userRouter = require("./routers/user.router");
 run();
 
 /* Middelwares */
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3002"],
+    credentials: true,
+  })
+);
 
 // Make sure to parse req.body as JSON
 app.use(express.json());

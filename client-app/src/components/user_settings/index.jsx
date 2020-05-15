@@ -6,9 +6,9 @@ import UserContext from "../../contexts/user-contexts/context";
 
 import CustomButton from "../custom_button/custom_button";
 
-const UserSettings = () => {
+const UserSettings = ({ closeSettings }) => {
   const [loading, setLoading] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
 
   const [state, setState] = useState({
     email: "",
@@ -45,6 +45,7 @@ const UserSettings = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(updatedUser),
       };
       setLoading(true);
@@ -57,52 +58,69 @@ const UserSettings = () => {
       console.log(res);
       const data = await res.json();
 
-      //stäng settings fliken
+      closeSettings();
       setLoading(false);
-
-      // if (data.status === "Authenticated") {
-      //   setUser(data.user);
-      //   setIsAuthenticated(true);
-      // } else if (data.status === "") {
-      //   alert("inga tomma rutor!");
-      // }
     } catch (error) {
       console.log("kan ej uppdatera användare", error.message);
       setLoading(false);
     }
   };
-
+  const removeUser = () => {
+    console.log("ta bort");
+    // borde kanske få en dubbelfråga ifall du verkligen vill ta bort
+    const options = {
+      method: "DELETE",
+      credentials: "include",
+    };
+    fetch("http://localhost:3002/api/users/" + user._id, options)
+      .then((res) => res.json())
+      .then((data) => {
+        alert("Medlemskap avslutat");
+        logout();
+      });
+  };
   return (
     <div className="settings-container">
       <h2>Inställningar</h2>
       <h5>Ändra dina uppgifter</h5>
 
-      <FormInput
-        type="email"
-        name="email"
-        value={state.email}
-        handleChange={handleChange}
-        label={"E-post"}
-      />
-      <FormInput
-        type="password"
-        name="password"
-        value={state.password}
-        handleChange={handleChange}
-        label={"Lösenord"}
-        required
-      />
-      <FormInput
-        type="password"
-        name="confirmPassword"
-        value={state.confirmPassword}
-        handleChange={handleChange}
-        label={"Bekräfta lösenord"}
-        required
-      />
-      <CustomButton handleClick={handleSubmit} type="submit">
-        Uppdatera
-      </CustomButton>
+      <div>
+        <FormInput
+          type="email"
+          name="email"
+          value={state.email}
+          handleChange={handleChange}
+          label={"E-post"}
+        />
+      </div>
+      <div>
+        <FormInput
+          type="password"
+          name="password"
+          value={state.password}
+          handleChange={handleChange}
+          label={"Lösenord"}
+          required
+        />
+      </div>
+      <div>
+        <FormInput
+          type="password"
+          name="confirmPassword"
+          value={state.confirmPassword}
+          handleChange={handleChange}
+          label={"Bekräfta lösenord"}
+          required
+        />
+      </div>
+      <div className="button-containter">
+        <CustomButton handleClick={handleSubmit} type="submit">
+          Uppdatera
+        </CustomButton>
+        <CustomButton handleClick={removeUser} type="submit">
+          Avsluta medlemskap
+        </CustomButton>
+      </div>
     </div>
   );
 };

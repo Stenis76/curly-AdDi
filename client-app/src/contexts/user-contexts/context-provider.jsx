@@ -11,6 +11,7 @@ function UserContextProvider(props) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ username, password }),
     };
 
@@ -25,12 +26,13 @@ function UserContextProvider(props) {
     return data.status;
   }
 
-  console.log("user", user);
-
   function logout() {
     console.log("id", user._id);
 
-    fetch("http://localhost:3002/api/logout/" + user._id);
+    fetch("http://localhost:3002/api/logout/" + user._id, {
+      method: "GET",
+      credentials: "include",
+    });
     setUser(undefined);
     setIsAuthenticated(false);
   }

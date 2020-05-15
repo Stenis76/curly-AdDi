@@ -16,7 +16,7 @@ const Header = ({ openPostModal, openSettings }) => {
     <div className="header">
       <div className="avatar">
         <img id="avatarImage" src={UserAvatar} alt="avatar" />
-        <p>Hej {user.name}</p>
+        <p>Hej {user ? user.name : ""}</p>
       </div>
       <h1>Båtforum</h1>
       <div className="controls">
