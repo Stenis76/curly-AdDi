@@ -15,8 +15,8 @@ POST http://localhost:3002/api/newuser
 Content-Type: application/json
 
 {
-    "name": "testson",
-    "username": "test1",
+    "name": "testson12",
+    "username": "test12",
     "email": "adam.kjall@humblebeeas.sw",
     "password": "123"
 }
@@ -38,12 +38,12 @@ DELETE http://localhost:3002/api/users/5eb296c5958d4620bcfd7240
 
 ###
 // UPDATE USER
-PUT   http://localhost:3002/api/users/5ebd4d97183aeb23aa3f62d7
+PUT   http://localhost:3002/api/users/5ebd8c483b5c7a3568caf750
 Content-Type: application/json
 
 {
     "email": "dick.skjk@jhhd.se",
-    "password": "123444"
+    "password": "1234"
 }
 
 

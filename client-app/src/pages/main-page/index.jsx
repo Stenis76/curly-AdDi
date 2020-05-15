@@ -19,7 +19,9 @@ const MainPage = () => {
   const [postToEdit, setPostToEdit] = useState(undefined);
 
   useEffect(() => {
-    fetch("http://localhost:3002/api/posts")
+    fetch("http://localhost:3002/api/posts", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((posts) => {
         setPosts(posts);
@@ -30,6 +32,7 @@ const MainPage = () => {
   const removePost = (postId) => {
     const options = {
       method: "DELETE",
+      credentials: "include",
     };
     fetch("http://localhost:3002/api/posts/" + postId, options)
       .then((res) => res.json())
@@ -80,26 +83,35 @@ const MainPage = () => {
           />
         ) : null}
         <div className="forum">
-          {loading ? (
-            <>
-              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
-              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
-              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
-              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
-              <Loader type="TailSpin" color="#00BFFF" height={70} width={70} />
-            </>
-          ) : (
-            posts.map((post) => (
-              <ForumPost
-                key={post._id}
-                post={post}
-                removePost={removePost}
-                openEditModal={openEditModal}
-              />
-            ))
-          )}
+          <div className="post-list">
+            {loading ? (
+              <>
+                {[0, 0, 0, 0, 0, 0].map((loader) => (
+                  <Loader
+                    type="TailSpin"
+                    color="#00BFFF"
+                    height={70}
+                    width={70}
+                  />
+                ))}
+              </>
+            ) : (
+              posts.map((post) => (
+                <ForumPost
+                  key={post._id}
+                  post={post}
+                  removePost={removePost}
+                  openEditModal={openEditModal}
+                />
+              ))
+            )}
+          </div>
         </div>
-        {showSettings ? <UserSettings /> : <Sidebar />}
+        {showSettings ? (
+          <UserSettings closeSettings={closeSettings} />
+        ) : (
+          <Sidebar />
+        )}
       </div>
     </div>
   );

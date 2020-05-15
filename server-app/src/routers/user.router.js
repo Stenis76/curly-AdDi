@@ -1,21 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 const User = require("../models/user.model");
-const authenticatedUsers = require("../authenticatedUsers.js");
+const { isAuthenticated } = require("../authenticationMiddleware.js");
 
 // GET ALL
-router.get("/api/users", async (req, res) => {
-  // console.log("users", authenticatedUsers.users);
-
-  // if (!authenticatedUsers.isAuthenticated(req.sessionID)) {
-  //   res.status(500).json("Not authenticated");
-  //   console.log("Not authenticated");
-  //   return;
-  // }
-  const { userId } = req.session;
-  console.log("userId", userId);
-
+router.get("/api/users", isAuthenticated, async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -25,7 +16,7 @@ router.get("/api/users", async (req, res) => {
 });
 
 // GET ONE BY ID
-router.get("/api/users/:userId", async (req, res) => {
+router.get("/api/users/:userId", isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     res.status(200).json(user);
@@ -33,16 +24,6 @@ router.get("/api/users/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-// GET ONE BY USERNAME
-// router.get("/api/users/:username", (req, res) => {
-//   try {
-//     const user = User.findOne(req.params.username);
-//     res.status(200).json(user);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 // CREATE
 router.post("/api/newuser", (req, res) => {
@@ -68,7 +49,7 @@ router.post("/api/newuser", (req, res) => {
           res.status(400).json(err);
         } else {
           // store authentication session
-          authenticatedUsers.addAuthenticated(user._id);
+          req.session.userId = user._id;
 
           res.status(201).json({ status: "Authenticated", user });
         }
@@ -86,10 +67,8 @@ router.post("/api/login", (req, res) => {
       if (err) {
         res.status(401).json({ status: "Wrong name" });
       } else if (user) {
-        req.session.userId = user._id;
-
         // store authentication session
-        authenticatedUsers.addAuthenticated(user._id);
+        req.session.userId = user._id;
 
         res.status(200).json({
           status: "Authenticated",
@@ -108,7 +87,7 @@ router.post("/api/login", (req, res) => {
 });
 
 // LOGOUT
-router.get("/api/logout/:userId", (req, res, next) => {
+router.get("/api/logout/:userId", isAuthenticated, (req, res, next) => {
   if (req.session) {
     // delete session object
     req.session.destroy(function (err) {
@@ -119,29 +98,33 @@ router.get("/api/logout/:userId", (req, res, next) => {
       }
     });
   }
-
-  authenticatedUsers.removeAuthenticated(req.params.userId);
 });
 
 // DELETE
-router.delete("/api/users/:userId", async (req, res) => {
+router.delete("/api/users/:userId", isAuthenticated, async (req, res) => {
   try {
     const removedUser = await User.deleteOne({ _id: req.params.userId });
-    res.status(200).json(removedUser);
+    res.status(200).json("User removed");
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 // UPDATE
-router.put("/api/users/:userId", async (req, res) => {
-  console.log("updatera användaren");
+router.put("/api/users/:userId", isAuthenticated, async (req, res) => {
   try {
-    const updatedUser = await User.updateOne(
-      { _id: req.params.userId },
-      { $set: { email: req.body.email, password: req.body.password } }
-    );
-    res.status(200).json(updatedUser);
+    let user = await User.findById(req.params.userId);
+
+    if (user) {
+      user.email = req.body.email;
+      user.password = req.body.password;
+
+      await user.save();
+
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ status: "User not found in db" });
+    }
   } catch (err) {
     res.status(500).json(err);
   }

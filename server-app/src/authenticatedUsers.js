@@ -1,10 +1,17 @@
-const users = {};
+// const users = {};
 
-const addAuthenticated = (userId) => (users[userId] = userId);
-const removeAuthenticated = (userId) => delete users[userId];
-const isAuthenticated = (userId) => users[userId] !== undefined;
+// const addAuthenticated = (sessionId, userId) => (users[sessionId] = userId);
+// const removeAuthenticated = (sessionId) => delete users[sessionId];
+// const sessionExists = (sessionId) => users[sessionId] !== undefined;
 
-exports.users = users;
-exports.addAuthenticated = addAuthenticated;
-exports.removeAuthenticated = removeAuthenticated;
+const isAuthenticated = (req, res, next) => {
+  if (req.session.userId) {
+    return next();
+  }
+  res.redirect("/");
+};
+
+// exports.users = users;
+// exports.addAuthenticated = addAuthenticated;
+// exports.removeAuthenticated = removeAuthenticated;
 exports.isAuthenticated = isAuthenticated;

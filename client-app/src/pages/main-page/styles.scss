@@ -13,16 +13,15 @@
 
     .forum {
       width: 100%;
+      display: flex;
+      justify-content: center;
       background: #d9eaf5;
-      overflow-y: scroll;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-      gap: 1rem;
 
-      .forum-post {
-        max-width: 40rem;
-        min-width: 20rem;
+      .post-list {
+        width: 50rem;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
       }
     }
   }

@@ -14,10 +14,14 @@ const ForumPost = ({ post, removePost, openEditModal }) => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(`http://localhost:3002/api/users/${post.authorId}`)
+    fetch(`http://localhost:3002/api/users/${post.authorId}`, {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((author) => setAuthor(author));
   }, [post]);
+
+  if (!user) return <div></div>;
 
   return (
     <div className="forum-post">
@@ -28,20 +32,22 @@ const ForumPost = ({ post, removePost, openEditModal }) => {
       </div>
       <div className="post">
         <div className="postheader">
-          <h4 className="date">posted: {post.date}</h4>
+          <h4 className="date">
+            Skapad den: {moment(new Date(post.date)).format("HH:mm ll")}
+          </h4>
           {user._id === post.authorId ? (
-            <>
+            <div>
               <FontAwesomeIcon
-                id="edit"
+                className="icon"
                 icon={faPen}
                 onClick={() => openEditModal(post._id)}
               />
               <FontAwesomeIcon
-                id="delete"
+                className="icon"
                 icon={faTimes}
                 onClick={() => removePost(post._id)}
               />
-            </>
+            </div>
           ) : null}
         </div>
         <h4>{post.title}</h4>

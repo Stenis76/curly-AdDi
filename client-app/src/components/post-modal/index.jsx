@@ -49,6 +49,7 @@ const PostModal = ({ closePostModal, addPost, postToEdit, editPost }) => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(newPost),
         };
 
@@ -74,6 +75,7 @@ const PostModal = ({ closePostModal, addPost, postToEdit, editPost }) => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(newPost),
         };
 

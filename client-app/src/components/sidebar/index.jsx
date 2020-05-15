@@ -6,7 +6,7 @@ const Sidebar = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3002/api/users")
+    fetch("http://localhost:3002/api/users", { credentials: "include" })
       .then((res) => res.json())
       .then((users) => {
         setUsers(users);

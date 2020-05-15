@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post.model");
+const { isAuthenticated } = require("../authenticationMiddleware.js");
 
 // GET ALL
-router.get("/api/posts", async (req, res) => {
+router.get("/api/posts", isAuthenticated, async (req, res) => {
   try {
     const posts = await Post.find();
     res.status(200).json(posts);
@@ -13,16 +14,14 @@ router.get("/api/posts", async (req, res) => {
 });
 
 // GET ONE
-router.get("/api/posts/:postId", (req, res) => {
+router.get("/api/posts/:postId", isAuthenticated, (req, res) => {
   Post.findById(req.params.postId)
     .then((post) => res.status(200).json(post))
     .catch((err) => res.status(500).json(err));
 });
 
 // CREATE
-router.post("/api/posts", (req, res) => {
-  // TODO maybe check if user is authenticated ?
-
+router.post("/api/posts", isAuthenticated, (req, res) => {
   const post = new Post({
     title: req.body.title,
     username: req.body.username,
@@ -34,14 +33,11 @@ router.post("/api/posts", (req, res) => {
   post.save((err, post) => {
     if (err) res.status(400).json(err);
     else res.status(201).json(post);
-    console.log("post", post.id);
   });
-  // .then((data) => res.status(201).json(data))
-  // .catch((err) => res.status(400).json(err));
 });
 
 // DELETE
-router.delete("/api/posts/:postId", async (req, res) => {
+router.delete("/api/posts/:postId", isAuthenticated, async (req, res) => {
   try {
     const removedPost = await Post.deleteOne({ _id: req.params.postId });
     res.status(200).json({ status: "removed post" });
@@ -51,7 +47,7 @@ router.delete("/api/posts/:postId", async (req, res) => {
 });
 
 // UPDATE
-router.put("/api/posts/:postId", async (req, res) => {
+router.put("/api/posts/:postId", isAuthenticated, async (req, res) => {
   try {
     const updatedPost = await Post.updateOne(
       { _id: req.params.postId },
