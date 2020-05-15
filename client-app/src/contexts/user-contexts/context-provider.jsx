@@ -20,6 +20,7 @@ function UserContextProvider(props) {
       setUser(data.user);
       setIsAuthenticated(true);
     }
+    console.log(data.status);
 
     return data.status;
   }
