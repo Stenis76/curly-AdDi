@@ -86,8 +86,9 @@ const MainPage = () => {
           <div className="post-list">
             {loading ? (
               <>
-                {[0, 0, 0, 0, 0, 0].map((loader) => (
+                {[0, 0, 0, 0, 0].map((loader, index) => (
                   <Loader
+                    key={index}
                     type="TailSpin"
                     color="#00BFFF"
                     height={70}
