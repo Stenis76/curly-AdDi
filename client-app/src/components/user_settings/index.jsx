@@ -51,7 +51,7 @@ const UserSettings = ({ closeSettings }) => {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:3002/api/users/" + user._id,
+        "http://localhost:8080/api/users/" + user._id,
         options
       );
 
@@ -72,7 +72,7 @@ const UserSettings = ({ closeSettings }) => {
       method: "DELETE",
       credentials: "include",
     };
-    fetch("http://localhost:3002/api/users/" + user._id, options)
+    fetch("http://localhost:8080/api/users/" + user._id, options)
       .then((res) => res.json())
       .then((data) => {
         alert("Medlemskap avslutat");

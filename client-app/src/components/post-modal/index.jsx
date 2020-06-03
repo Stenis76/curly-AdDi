@@ -54,7 +54,7 @@ const PostModal = ({ closePostModal, addPost, postToEdit, editPost }) => {
         };
 
         const res = await fetch(
-          "http://localhost:3002/api/posts/" + postToEdit._id,
+          "http://localhost:8080/api/posts/" + postToEdit._id,
           options
         );
         const data = await res.json();
@@ -79,7 +79,7 @@ const PostModal = ({ closePostModal, addPost, postToEdit, editPost }) => {
           body: JSON.stringify(newPost),
         };
 
-        const res = await fetch("http://localhost:3002/api/posts", options);
+        const res = await fetch("http://localhost:8080/api/posts", options);
         const data = await res.json();
 
         if (data.message) {

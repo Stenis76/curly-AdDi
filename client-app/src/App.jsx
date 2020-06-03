@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import WelcomePage from "./pages/welcome-page";
 import MainPage from "./pages/main-page";
+import ProtectedRoute from "./router/protected-route";
 
 import "./app.css";
 
@@ -17,17 +18,13 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/welcome" />} />
-        <Route path="/welcome">
-          <WelcomePage />
-        </Route>
         <Route
-          path="/main"
-          render={() => {
-            if (!isAuthenticated) {
-              return <Redirect to="/welcome" />;
-            } else return <MainPage />;
-          }}
+          path="/welcome"
+          render={() =>
+            isAuthenticated ? <Redirect to="/main" /> : <WelcomePage />
+          }
         />
+        <ProtectedRoute exact path="/main" component={MainPage} />
       </Switch>
     </div>
   );

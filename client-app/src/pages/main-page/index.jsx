@@ -19,7 +19,7 @@ const MainPage = () => {
   const [postToEdit, setPostToEdit] = useState(undefined);
 
   useEffect(() => {
-    fetch("http://localhost:3002/api/posts", {
+    fetch("http://localhost:8080/api/posts", {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -34,7 +34,7 @@ const MainPage = () => {
       method: "DELETE",
       credentials: "include",
     };
-    fetch("http://localhost:3002/api/posts/" + postId, options)
+    fetch("http://localhost:8080/api/posts/" + postId, options)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "removed post") {

@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserContext from "./context";
 
 function UserContextProvider(props) {
   const [user, setUser] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // check if user already has an authentication session
+  useEffect(() => {
+    const options = {
+      credentials: "include",
+    };
+
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/session", options);
+        const data = await res.json();
+
+        if (data.user) {
+          setUser(data.user);
+          setIsAuthenticated(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   async function login(username, password) {
     const options = {
@@ -15,24 +38,21 @@ function UserContextProvider(props) {
       body: JSON.stringify({ username, password }),
     };
 
-    const res = await fetch("http://localhost:3002/api/login", options);
+    const res = await fetch("http://localhost:8080/api/login", options);
     const data = await res.json();
     if (data.user) {
       setUser(data.user);
       setIsAuthenticated(true);
     }
-    console.log(data.status);
 
     return data.status;
   }
 
   function logout() {
-    console.log("id", user._id);
-
-    fetch("http://localhost:3002/api/logout/" + user._id, {
-      method: "GET",
+    const options = {
       credentials: "include",
-    });
+    };
+    fetch("http://localhost:8080/api/logout", options);
     setUser(undefined);
     setIsAuthenticated(false);
   }

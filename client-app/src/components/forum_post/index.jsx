@@ -14,7 +14,7 @@ const ForumPost = ({ post, removePost, openEditModal }) => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(`http://localhost:3002/api/users/${post.authorId}`, {
+    fetch(`http://localhost:8080/api/users/${post.authorId}`, {
       credentials: "include",
     })
       .then((res) => res.json())

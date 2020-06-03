@@ -27,19 +27,18 @@ const SignIn = () => {
     try {
       setLoading(true);
       const response = await login(username, password);
-      setLoading(false);
-      console.log(response);
 
       if (response === "Authenticated") {
         history.push("/main");
       } else if (response === "Wrong password") {
         alert("fel lösenord");
+        setLoading(false);
       } else if (response === "Wrong name") {
         alert("användarnamnet finns ej");
+        setLoading(false);
       }
     } catch (error) {
       console.log("Error while loggin in", error.message);
-      setLoading(false);
     }
   };
 

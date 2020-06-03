@@ -16,7 +16,7 @@ run();
 /* Middelwares */
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3002"],
+    origin: ["http://localhost:3000", "http://localhost:8080"],
     credentials: true,
   })
 );
@@ -44,7 +44,7 @@ app.use(
 app.use(userRouter);
 app.use(postRouter);
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
 /* Start server */
 app.listen(PORT, () =>

@@ -5,8 +5,19 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 const { isAuthenticated } = require("../authenticationMiddleware.js");
 
+// GET SESSION USER
+router.get("/api/session", isAuthenticated, async (req, res) => {
+  User.findById(req.session.userId, (err, user) => {
+    if (err) {
+      res.status(404).json({ message: "Couldn't find user" });
+      return;
+    }
+    res.status(200).json({ user });
+  });
+});
+
 // GET ALL
-router.get("/api/users", isAuthenticated, async (req, res) => {
+router.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -87,14 +98,14 @@ router.post("/api/login", (req, res) => {
 });
 
 // LOGOUT
-router.get("/api/logout/:userId", isAuthenticated, (req, res, next) => {
+router.get("/api/logout", isAuthenticated, (req, res, next) => {
   if (req.session) {
     // delete session object
     req.session.destroy(function (err) {
       if (err) {
         return next(err);
       } else {
-        return res.redirect("/");
+        return res.status("/");
       }
     });
   }
