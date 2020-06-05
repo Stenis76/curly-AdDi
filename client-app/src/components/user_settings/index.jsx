@@ -55,7 +55,6 @@ const UserSettings = ({ closeSettings }) => {
         options
       );
 
-      console.log(res);
       const data = await res.json();
 
       closeSettings();
@@ -66,8 +65,6 @@ const UserSettings = ({ closeSettings }) => {
     }
   };
   const removeUser = () => {
-    console.log("ta bort");
-    // borde kanske få en dubbelfråga ifall du verkligen vill ta bort
     const options = {
       method: "DELETE",
       credentials: "include",

@@ -114,8 +114,14 @@ router.get("/api/logout", isAuthenticated, (req, res, next) => {
 // DELETE
 router.delete("/api/users/:userId", isAuthenticated, async (req, res) => {
   try {
-    const removedUser = await User.deleteOne({ _id: req.params.userId });
-    res.status(200).json("User removed");
+    const sessionUser = await User.findById({ _id: req.session.userId });
+    if (sessionUser._id === req.params.userId || sessionUser.role === "admin") {
+      const removedUser = await User.deleteOne({ _id: req.params.userId });
+      res.status(200).json({ status: "User removed" });
+    }
+    res.status(400).json({
+      status: "You need administrator permission to delete this document",
+    });
   } catch (err) {
     res.status(500).json(err);
   }

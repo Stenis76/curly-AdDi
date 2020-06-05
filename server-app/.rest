@@ -2,7 +2,7 @@
 // ----- USER ------ // 
 ###
 // GET ONE USER BY ID
-GET http://localhost:8080/api/users/5eb294dc5ecfbb162830364e
+GET http://localhost:8080/api/users/5ebeec923a872f4114fd2fbd
 
 ###
 // GET ALL USERS
@@ -15,9 +15,9 @@ POST http://localhost:8080/api/newuser
 Content-Type: application/json
 
 {
-    "name": "testson12",
-    "username": "test12",
-    "email": "adam.kjall@humblebeeas.sw",
+    "name": "test testsson",
+    "username": "test100",
+    "email": "test@testsson.com",
     "password": "123"
 }
 
@@ -30,6 +30,10 @@ Content-Type: application/json
     "username": "test12",
     "password": "123"
 }
+
+###
+// LOGOUt
+GET http://localhost:8080/api/logout
 
 ###
 // GET SESSION
@@ -61,7 +65,7 @@ GET http://localhost:8080/api/posts
 
 ###
 // GET POST BY ID
-GET http://localhost:8080/api/posts/postid
+GET http://localhost:8080/api/posts/5ebeec973a872f4114fd2fbe
 
 ###
 // CREATE A POST
