@@ -8,6 +8,7 @@ const CustomButton = ({
   inverted,
   type,
   handleClick,
+  ...rest
 }) => (
   <button
     className={`${inverted ? "inverted" : ""} ${
@@ -15,6 +16,7 @@ const CustomButton = ({
     } custom-button`}
     type={type}
     onClick={handleClick}
+    {...rest}
   >
     {children}
   </button>

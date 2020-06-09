@@ -18,9 +18,9 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/main" />} />
-        <Route path="/login">
+        {/* <Route path="/login">
           <LogInPage />
-        </Route>
+        </Route> */}
         <Route path="/main">
           <MainPage />;
         </Route>

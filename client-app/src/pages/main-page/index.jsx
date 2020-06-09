@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import ForumPost from "../../components/forum_post";
 import PostModal from "../../components/post-modal";
 import UserSettings from "../../components/user_settings";
+import LogInModal from "../../components/log-in-modal";
 
 import "./styles.scss";
 import Sidebar from "../../components/sidebar";
@@ -14,6 +15,7 @@ import { useContext } from "react";
 
 const MainPage = () => {
   const [showPostModal, setShowPostModal] = useState(false);
+  const [showLogIn, setShowLoginIn] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
@@ -54,6 +56,7 @@ const MainPage = () => {
   };
 
   const openPostModal = () => setShowPostModal(true);
+
   const closePostModal = () => {
     setShowPostModal(false);
     setPostToEdit(undefined);
@@ -61,6 +64,11 @@ const MainPage = () => {
   const openSettings = () => setShowSettings(true);
 
   const closeSettings = () => setShowSettings(false);
+
+  const openLogin = () => setShowLoginIn(true);
+
+  const closeLogin = () => setShowLoginIn(false);
+
   const addPost = (post) => setPosts([...posts, post]);
 
   const editPost = (updatedPost) => {
@@ -76,7 +84,11 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <Header openPostModal={openPostModal} openSettings={openSettings} />
+      <Header
+        openLoginModal={openLogin}
+        openPostModal={openPostModal}
+        openSettings={openSettings}
+      />
       <div className="main-content">
         {showPostModal ? (
           <PostModal
@@ -85,6 +97,8 @@ const MainPage = () => {
             postToEdit={postToEdit}
             editPost={editPost}
           />
+        ) : !isAuthenticated && showLogIn ? (
+          <LogInModal closeModal={closeLogin} />
         ) : null}
         <div className="forum">
           <div className="post-list">

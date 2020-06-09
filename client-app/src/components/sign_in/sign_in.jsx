@@ -8,7 +8,7 @@ import CustomButton from "../custom_button/custom_button";
 
 import "./sign_in.styles.scss";
 
-const SignIn = () => {
+const SignIn = ({ showRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,15 +27,14 @@ const SignIn = () => {
     try {
       setLoading(true);
       const response = await login(username, password);
+      // setLoading(false);
 
       if (response === "Authenticated") {
         history.push("/main");
       } else if (response === "Wrong password") {
         alert("fel lösenord");
-        setLoading(false);
       } else if (response === "Wrong name") {
         alert("användarnamnet finns ej");
-        setLoading(false);
       }
     } catch (error) {
       console.log("Error while loggin in", error.message);
@@ -67,9 +66,17 @@ const SignIn = () => {
 
           <div className="buttons">
             <CustomButton type="submit">Logga in</CustomButton>
-            <Link to="/login/register">
-              <CustomButton>Registrera dig</CustomButton>
-            </Link>
+            {/* <Link to="/login/register"> */}
+            <CustomButton
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                showRegister();
+              }}
+            >
+              Registrera dig
+            </CustomButton>
+            {/* </Link> */}
           </div>
         </form>
       )}

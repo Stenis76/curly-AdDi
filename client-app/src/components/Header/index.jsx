@@ -11,7 +11,7 @@ import UserContext from "../../contexts/user-contexts/context";
 import UserAvatar from "../../resources/hair-and-beard-png-3.png";
 import "./styles.scss";
 
-const Header = ({ openPostModal, openSettings }) => {
+const Header = ({ openPostModal, openSettings, openLoginModal }) => {
   const { logout } = useContext(UserContext);
   const { user, isAuthenticated } = useContext(UserContext);
 
@@ -38,9 +38,13 @@ const Header = ({ openPostModal, openSettings }) => {
             />
           </>
         ) : (
-          <Link to="/login">
-            <FontAwesomeIcon id="sign-in-alt" icon={faSignInAlt} />
-          </Link>
+          // <Link to="/login">
+          <FontAwesomeIcon
+            id="sign-in-alt"
+            icon={faSignInAlt}
+            onClick={openLoginModal}
+          />
+          // </Link>
         )}
       </div>
     </div>
