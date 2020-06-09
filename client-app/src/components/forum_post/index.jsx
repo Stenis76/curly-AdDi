@@ -21,8 +21,6 @@ const ForumPost = ({ post, removePost, openEditModal }) => {
       .then((author) => setAuthor(author));
   }, [post]);
 
-  if (!user) return <div></div>;
-
   return (
     <div className="forum-post">
       <div className="avatar">
@@ -35,7 +33,7 @@ const ForumPost = ({ post, removePost, openEditModal }) => {
           <h4 className="date">
             Skapad den: {moment(new Date(post.date)).format("HH:mm ll")}
           </h4>
-          {user._id === post.authorId ? (
+          {user && user._id === post.authorId ? (
             <div>
               <FontAwesomeIcon
                 className="icon"

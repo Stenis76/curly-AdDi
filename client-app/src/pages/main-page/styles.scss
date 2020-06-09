@@ -15,11 +15,13 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      background: #d9eaf5;
+      background-image: url("../../resources/jonathan-smith-ilAAXi1TnbY-unsplash.jpg");
+      background-size: cover;
+      background-position: center;
 
       .post-list {
         width: 50rem;
-        overflow-y: scroll;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
       }

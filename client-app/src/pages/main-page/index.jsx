@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loader from "react-loader-spinner";
 
-import moment from "moment";
+import UserContext from "../../contexts/user-contexts/context";
 
 import Header from "../../components/Header";
 import ForumPost from "../../components/forum_post";
@@ -10,6 +10,7 @@ import UserSettings from "../../components/user_settings";
 
 import "./styles.scss";
 import Sidebar from "../../components/sidebar";
+import { useContext } from "react";
 
 const MainPage = () => {
   const [showPostModal, setShowPostModal] = useState(false);
@@ -17,6 +18,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [postToEdit, setPostToEdit] = useState(undefined);
+  const { isAuthenticated } = useContext(UserContext);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/posts", {
@@ -24,6 +26,8 @@ const MainPage = () => {
     })
       .then((res) => res.json())
       .then((posts) => {
+        console.log("posts", posts);
+
         setPosts(posts);
         setLoading(false);
       });
@@ -108,7 +112,7 @@ const MainPage = () => {
             )}
           </div>
         </div>
-        {showSettings ? (
+        {!isAuthenticated ? null : showSettings ? (
           <UserSettings closeSettings={closeSettings} />
         ) : (
           <Sidebar />

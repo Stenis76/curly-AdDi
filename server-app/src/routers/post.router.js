@@ -4,7 +4,7 @@ const Post = require("../models/post.model");
 const { isAuthenticated } = require("../authenticationMiddleware.js");
 
 // GET ALL
-router.get("/api/posts", isAuthenticated, async (req, res) => {
+router.get("/api/posts", async (req, res) => {
   try {
     const posts = await Post.find();
     res.status(200).json(posts);
@@ -14,7 +14,7 @@ router.get("/api/posts", isAuthenticated, async (req, res) => {
 });
 
 // GET ONE
-router.get("/api/posts/:postId", isAuthenticated, (req, res) => {
+router.get("/api/posts/:postId", (req, res) => {
   Post.findById(req.params.postId)
     .then((post) => res.status(200).json(post))
     .catch((err) => res.status(500).json(err));

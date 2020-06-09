@@ -67,7 +67,7 @@ const SignIn = () => {
 
           <div className="buttons">
             <CustomButton type="submit">Logga in</CustomButton>
-            <Link to="/welcome/register">
+            <Link to="/login/register">
               <CustomButton>Registrera dig</CustomButton>
             </Link>
           </div>

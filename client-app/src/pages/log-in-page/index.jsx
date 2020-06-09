@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import SignUp from "../../components/sign_up/sign_up";
@@ -6,7 +6,7 @@ import SignIn from "../../components/sign_in/sign_in";
 
 import "./styles.scss";
 
-const WelcomePage = () => {
+const MainPage = () => {
   return (
     <div className="welcome-page">
       <div className="greeter">
@@ -14,10 +14,10 @@ const WelcomePage = () => {
       </div>
 
       <Switch>
-        <Route exact path="/welcome">
+        <Route exact path="/login">
           <SignIn />
         </Route>
-        <Route path="/welcome/register">
+        <Route path="/login/register">
           <SignUp />
         </Route>
       </Switch>
@@ -25,4 +25,4 @@ const WelcomePage = () => {
   );
 };
 
-export default WelcomePage;
+export default MainPage;

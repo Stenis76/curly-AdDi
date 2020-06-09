@@ -3,8 +3,8 @@ import UserContext from "./contexts/user-contexts/context";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import WelcomePage from "./pages/welcome-page";
 import MainPage from "./pages/main-page";
+import LogInPage from "./pages/log-in-page";
 import ProtectedRoute from "./router/protected-route";
 
 import "./app.css";
@@ -17,14 +17,14 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/welcome" />} />
-        <Route
-          path="/welcome"
-          render={() =>
-            isAuthenticated ? <Redirect to="/main" /> : <WelcomePage />
-          }
+        <Route exact path="/" render={() => <Redirect to="/main" />} />
+        <Route path="/login">
+          <LogInPage />
+        </Route>
+        <Route path="/main">
+          <MainPage />;
+        </Route>
         />
-        <ProtectedRoute exact path="/main" component={MainPage} />
       </Switch>
     </div>
   );
